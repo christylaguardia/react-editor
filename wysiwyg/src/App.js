@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+// const cowsay = require('cowsay');
+import cowsay from 'cowsay';
 
 class App extends Component {
 
@@ -7,41 +9,48 @@ class App extends Component {
     super(props);
     
     this.state = {
-      message: 'type your message here',
-      bold: '',
-      italic: '',
-      underlined: '',
+      message: props.initialMessage,
+      bold: 'bold',
+      italic: 'italic',
+      underline: 'underline',
+      fontSize: '20', //px
       color: '#000000'
     };
   }
 
   handleOnChange(target) {
-    // let newValue = target.type === 'checkbox' ? target.name : target.value;
-
     let newValue = target.value;
 
     if(target.type === 'checkbox' && target.checked === true) newValue = target.name;
     else if(target.type === 'checkbox' && target.checked === false) newValue = '';
 
-    // if(target.name === 'bold' && target.checked === true) newValue = 'bold';
-    // else if(target.name === 'bold' && target.checked === false) newValue = '';
-    
-    // if(target.name === 'italic' && target.checked === true) newValue = 'italic';
-    // else if(target.name === 'italic' && target.checked === false) newValue = '';
-
-    // if(target.name === 'underline' && target.checked === true) newValue = 'underline';
-    // else if(target.name === 'underline' && target.checked === false) newValue = '';
-
     this.setState({ [target.name]: newValue });
+
+    console.log('target type', target.type);
+    console.log('value', newValue);
     
-    // console.log(target.name, newValue);
   }
 
-  // toggleCheckbox(target) {
-  // }
+  handleOnChangeFontSize(target) {
+    this.setState({ fontSize: target.value });
+  }
 
-  handleClearButton() {
+  handleClear() {
     this.setState({ message: '' });
+  }
+
+  handleClick() {
+    if(this.state.message === this.props.initialMessage) this.handleClear();
+  }
+
+  handleCowsay() {
+    let newMessage = cowsay.say({
+      text : this.state.message,
+      e : 'oO',
+      T : 'U '
+    });
+
+    this.setState({ message: newMessage });
   }
 
   render() {
@@ -86,12 +95,34 @@ class App extends Component {
               value={this.state.color}
               onChange={({target}) => this.handleOnChange(target)} />
           </label>
+
+          <label>
+            font size:
+            <select
+              className="button"
+              onChange={({target}) => this.handleOnChangeFontSize(target)}>
+              <option value="8">8</option>
+              <option value="10">10</option>
+              <option value="12">12</option>
+              <option value="14">14</option>
+              <option value="16">16</option>
+            </select>
+          </label>
           
           <input
             name="clear-button"
+            className="button"
             type="button"
             value="Clear"
-            onClick={() => this.handleClearButton()} />
+            onClick={() => this.handleClear()} />
+
+          <input
+            name="cowsay-button"
+            className="button"
+            type="button"
+            value="Convert to Cowsay"
+            onClick={() => this.handleCowsay()} />
+
         </div>
       
         <div>
@@ -101,12 +132,14 @@ class App extends Component {
             value={this.state.message}
             style={{
               color: this.state.color,
+              fontSize: this.state.fontSize + 'px',
               fontWeight: this.state.bold,
               fontStyle: this.state.italic,
               textDecoration: this.state.underline
             }}
             rows="6" cols="50"
-            onChange={({target}) => this.handleOnChange(target)}>
+            onChange={({target}) => this.handleOnChange(target)}
+            onClick={() => this.handleClick()} >
           </textarea>
         </div>
 

@@ -28,3 +28,18 @@ input {
 #editor:focus {
   outline: none;
 }
+
+.button {
+  color: black;
+  background-color: white;
+  font-size: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border: 1px solid grey;
+  border-radius: 3px;
+}
+
+.button:hover {
+  color: white;
+  background-color: grey;
+}
