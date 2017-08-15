@@ -8,15 +8,40 @@ class App extends Component {
     
     this.state = {
       message: 'type your message here',
-      color: '#000000',
-      bold: 'checked',
-      italic: 'checked'
+      bold: '',
+      italic: '',
+      underlined: '',
+      color: '#000000'
     };
   }
 
-  handleOnChange({name, value}) {
-    this.setState({ [name]: value });
-    console.log(name, value);
+  handleOnChange(target) {
+    // let newValue = target.type === 'checkbox' ? target.name : target.value;
+
+    let newValue = target.value;
+
+    if(target.type === 'checkbox' && target.checked === true) newValue = target.name;
+    else if(target.type === 'checkbox' && target.checked === false) newValue = '';
+
+    // if(target.name === 'bold' && target.checked === true) newValue = 'bold';
+    // else if(target.name === 'bold' && target.checked === false) newValue = '';
+    
+    // if(target.name === 'italic' && target.checked === true) newValue = 'italic';
+    // else if(target.name === 'italic' && target.checked === false) newValue = '';
+
+    // if(target.name === 'underline' && target.checked === true) newValue = 'underline';
+    // else if(target.name === 'underline' && target.checked === false) newValue = '';
+
+    this.setState({ [target.name]: newValue });
+    
+    // console.log(target.name, newValue);
+  }
+
+  // toggleCheckbox(target) {
+  // }
+
+  handleClearButton() {
+    this.setState({ message: '' });
   }
 
   render() {
@@ -24,16 +49,14 @@ class App extends Component {
       <div className="main">
         <h1>Christy's WYSIWYG Editor</h1>
 
-        <div className="inputs">
+        <div>
 
-          
-          
           <label>
             bold: 
             <input
               name="bold"
-              value={this.state.bold}
               type="checkbox"
+              checked={this.state.bold}
               onChange={({target}) => this.handleOnChange(target)} />
           </label>
 
@@ -41,8 +64,17 @@ class App extends Component {
             italic: 
             <input
               name="italic"
-              value={this.state.italic}
               type="checkbox"
+              checked={this.state.italic}
+              onChange={({target}) => this.handleOnChange(target)} />
+          </label>
+
+          <label>
+            underline: 
+            <input
+              name="underline"
+              type="checkbox"
+              checked={this.state.underline}
               onChange={({target}) => this.handleOnChange(target)} />
           </label>
 
@@ -50,40 +82,35 @@ class App extends Component {
             color: 
             <input
               name="color"
-              value={this.state.color}
               type="color"
+              value={this.state.color}
               onChange={({target}) => this.handleOnChange(target)} />
           </label>
           
           <input
-            name="button"
-            value="do something"
-            type="button" />
+            name="clear-button"
+            type="button"
+            value="Clear"
+            onClick={() => this.handleClearButton()} />
         </div>
       
         <div>
-
-          <label>
-            message: 
-            <input
-              id="editor"
-              name="message"
-              value={this.state.message}
-              type="text"
-              onChange={({target}) => this.handleOnChange(target)} />
-          </label>
-
-          <div id="preview"
-            style={{color: this.state.color}}
+          <textarea
+            id="editor"
+            name="message"
+            value={this.state.message}
+            style={{
+              color: this.state.color,
+              fontWeight: this.state.bold,
+              fontStyle: this.state.italic,
+              textDecoration: this.state.underline
+            }}
+            rows="6" cols="50"
             onChange={({target}) => this.handleOnChange(target)}>
-            
-            {this.state.message}
-
-          </div>
+          </textarea>
         </div>
 
-      </div
-      >
+      </div>
     );
   }
 }

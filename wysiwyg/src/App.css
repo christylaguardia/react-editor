@@ -18,15 +18,13 @@ input {
 }
 
 #editor {
+  width: 100%;
+  padding: .25rem;
   font-size: 1rem;
   border: 1px solid grey;
   border-radius: 5px;
 }
 
-#preview {
-  width: 100%;
-  min-height: 5rem;
-  padding: .25rem;
-  border: 1px solid grey;
-  border-radius: 5px;
+#editor:focus {
+  outline: none;
 }
