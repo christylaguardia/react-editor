@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-// const cowsay = require('cowsay');
-import cowsay from 'cowsay';
 
 class App extends Component {
 
@@ -10,10 +8,11 @@ class App extends Component {
     
     this.state = {
       message: props.initialMessage,
-      bold: 'bold',
-      italic: 'italic',
-      underline: 'underline',
-      fontSize: '20', //px
+      bold: '',
+      italic: '',
+      underline: '',
+      fontSize: '12',
+      align: 'left',
       color: '#000000'
     };
   }
@@ -27,6 +26,7 @@ class App extends Component {
     this.setState({ [target.name]: newValue });
 
     console.log('target type', target.type);
+    console.log('target name', target.name);
     console.log('value', newValue);
     
   }
@@ -41,16 +41,6 @@ class App extends Component {
 
   handleClick() {
     if(this.state.message === this.props.initialMessage) this.handleClear();
-  }
-
-  handleCowsay() {
-    let newMessage = cowsay.say({
-      text : this.state.message,
-      e : 'oO',
-      T : 'U '
-    });
-
-    this.setState({ message: newMessage });
   }
 
   render() {
@@ -100,28 +90,45 @@ class App extends Component {
             font size:
             <select
               className="button"
+              value={this.state.fontSize}
               onChange={({target}) => this.handleOnChangeFontSize(target)}>
               <option value="8">8</option>
               <option value="10">10</option>
               <option value="12">12</option>
               <option value="14">14</option>
               <option value="16">16</option>
+              <option value="18">18</option>
+              <option value="20">20</option>
             </select>
+          </label>
+
+          <label>
+            align: left
+            <input
+              name="align"
+              type="radio"
+              value="left"
+              onClick={({target}) => this.handleOnChange(target)} />
+            center
+            <input
+              name="align"
+              type="radio"
+              value="center"
+              onClick={({target}) => this.handleOnChange(target)} />
+            right
+            <input
+              name="align"
+              type="radio"
+              value="right"
+              onClick={({target}) => this.handleOnChange(target)} />
           </label>
           
           <input
             name="clear-button"
-            className="button"
+            id="clear" className="button"
             type="button"
             value="Clear"
             onClick={() => this.handleClear()} />
-
-          <input
-            name="cowsay-button"
-            className="button"
-            type="button"
-            value="Convert to Cowsay"
-            onClick={() => this.handleCowsay()} />
 
         </div>
       
@@ -135,7 +142,8 @@ class App extends Component {
               fontSize: this.state.fontSize + 'px',
               fontWeight: this.state.bold,
               fontStyle: this.state.italic,
-              textDecoration: this.state.underline
+              textDecoration: this.state.underline,
+              textAlign: this.state.align
             }}
             rows="6" cols="50"
             onChange={({target}) => this.handleOnChange(target)}

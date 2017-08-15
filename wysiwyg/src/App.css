@@ -10,6 +10,10 @@
 
 label {
   cursor: default;
+  padding: .25rem;
+  border: 1px solid grey;
+  border-radius: 3px;
+  margin-right: .5rem;
 }
 
 input {
@@ -33,10 +37,15 @@ input {
   color: black;
   background-color: white;
   font-size: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: .25rem;
+  padding-right: .25rem;
   border: 1px solid grey;
   border-radius: 3px;
+  margin-left: .5rem;
+}
+
+#clear {
+  float: right;
 }
 
 .button:hover {
