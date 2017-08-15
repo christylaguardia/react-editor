@@ -21,6 +21,10 @@ input {
   margin: .5rem;
 }
 
+input[type=radio] {
+  margin-right: .75rem;
+}
+
 #editor {
   width: 100%;
   padding: .25rem;
@@ -46,6 +50,7 @@ input {
 
 #clear {
   float: right;
+  margin-right: 0;
 }
 
 .button:hover {

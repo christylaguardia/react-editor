@@ -11,9 +11,10 @@ class App extends Component {
       bold: '',
       italic: '',
       underline: '',
-      fontSize: '12',
+      fontSize: '1',
       align: 'left',
-      color: '#000000'
+      color: '#000000',
+      case: 'lower'
     };
   }
 
@@ -33,6 +34,10 @@ class App extends Component {
 
   handleOnChangeFontSize(target) {
     this.setState({ fontSize: target.value });
+  }
+
+  handleOnChangeCase(target) {
+    this.setState({ case: target.value });
   }
 
   handleClear() {
@@ -92,13 +97,13 @@ class App extends Component {
               className="button"
               value={this.state.fontSize}
               onChange={({target}) => this.handleOnChangeFontSize(target)}>
-              <option value="8">8</option>
-              <option value="10">10</option>
-              <option value="12">12</option>
-              <option value="14">14</option>
-              <option value="16">16</option>
-              <option value="18">18</option>
-              <option value="20">20</option>
+              <option value=".5">8</option>
+              <option value=".75">10</option>
+              <option value="1">12</option>
+              <option value="1.25">14</option>
+              <option value="1.5">16</option>
+              <option value="1.75">18</option>
+              <option value="2">20</option>
             </select>
           </label>
 
@@ -122,13 +127,18 @@ class App extends Component {
               value="right"
               onClick={({target}) => this.handleOnChange(target)} />
           </label>
-          
-          <input
-            name="clear-button"
-            id="clear" className="button"
-            type="button"
-            value="Clear"
-            onClick={() => this.handleClear()} />
+
+          <label>
+            case:
+            <select
+              className="button"
+              value={this.state.case}
+              onChange={({target}) => this.handleOnChangeCase(target)}>
+              <option value="uppercase">UPPER</option>
+              <option value="lowercase">lower</option>
+              <option value="capitalize">Title</option>
+            </select>
+          </label>
 
         </div>
       
@@ -139,16 +149,24 @@ class App extends Component {
             value={this.state.message}
             style={{
               color: this.state.color,
-              fontSize: this.state.fontSize + 'px',
+              fontSize: this.state.fontSize + 'rem',
               fontWeight: this.state.bold,
               fontStyle: this.state.italic,
               textDecoration: this.state.underline,
-              textAlign: this.state.align
+              textAlign: this.state.align,
+              textTransform: this.state.case
             }}
-            rows="6" cols="50"
+            rows="10" cols="50"
             onChange={({target}) => this.handleOnChange(target)}
             onClick={() => this.handleClick()} >
           </textarea>
+
+          <input
+            name="clear-button"
+            id="clear" className="button"
+            type="button"
+            value="Clear"
+            onClick={() => this.handleClear()} />
         </div>
 
       </div>
